@@ -182,7 +182,7 @@ void analyser_WWWW_huhlaev (
             for (auto j : electrons_indexes) {
                 TLorentzVector electron_vector = make_lepton(reader, j, true);
                 if (jet_vector.DeltaR(electron_vector) > 0.2) continue;
-
+		pass = false;
                 break;
             }
 	    if(pass) selected_jets.push_back(i);
