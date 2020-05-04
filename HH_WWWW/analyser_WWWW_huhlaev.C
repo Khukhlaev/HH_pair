@@ -36,7 +36,7 @@ TLorentzVector make_lepton(Delphes* reader, Long64_t index, bool electron) {
                 reader->Muon_PT[index],
                 reader->Muon_Eta[index],
                 reader->Muon_Phi[index],
-                0.113428913073);
+                0.1056583715);
     return vec;
 }
 
@@ -112,19 +112,23 @@ void analyser_WWWW_huhlaev (
     selections->Fill("muR_10_muF_20", 0);
     selections->Fill("muR_20_muF_10", 0);
     selections->Fill("muR_20_muF_20", 0);
-    selections->Fill("2l channel - number_leptons == 2", 1);
-    selections->Fill("2l channel - TMath::Abs(sum_leptons_charge) != 2", 1);
-    selections->Fill("2l channel - jets_indexes.size() < 3", 1);
-    selections->Fill("2l channel - selected", 1);
-
+    selections->Fill("2l channel - number_leptons == 2", 0);
+    selections->Fill("2l channel - TMath::Abs(sum_leptons_charge) != 2", 0);
+    selections->Fill("2l channel - jets_indexes.size() < 3", 0);
+    selections->Fill("2l channel - selected", 0);
+    selections->Fill("Selected 3 leptons events", 0);
+    selections->Fill("Summary mass of 4 leptons < 180 GeV", 0);
+    selections->Fill("Summary mass of 4 leptons > 180 GeV", 0);
+    selections->Fill("Selected events", 0);
+	
     Long64_t entries = tree->GetEntries();
     double weight_sum = 0;
 
     for (Long64_t entry = 0; entry < entries; entry++) {
         reader->GetEntry(entry);
         selections->Fill("Total", 1);
-
-        if ((1 + entry) % 5000 == 0) {
+//if (entry > 10000) break;
+        if (entry % 5000 == 0) {
             cerr << entry << '/' << entries << endl;
         }
 
@@ -169,7 +173,6 @@ void analyser_WWWW_huhlaev (
             jets_indexes.push_back(i);
             selections->Fill("Pre-selected jets", 1);
         }
-        cout << "jets_indexes = " << jets_indexes.size() << endl;
 
         // Remove jets which too close to leptons
         vector<ULong64_t> selected_jets;
@@ -179,18 +182,18 @@ void analyser_WWWW_huhlaev (
             for (auto j : electrons_indexes) {
                 TLorentzVector electron_vector = make_lepton(reader, j, true);
                 if (jet_vector.DeltaR(electron_vector) > 0.2) continue;
-                pass = false;
+
                 break;
             }
-        }
+	    if(pass) selected_jets.push_back(i);
+	}
         jets_indexes = selected_jets;
         selected_jets.clear();
         selections->Fill("Selected jets", jets_indexes.size());
 
-
         // Remove electrons which too close to jets
         vector<ULong64_t> selected_electrons;
-        for(auto i : electrons_indexes) {
+        for(ULong64_t i : electrons_indexes) {
             TLorentzVector electron_vector = make_lepton(reader, i, true);
             bool pass = true;
             for(auto j : jets_indexes) {
@@ -211,7 +214,7 @@ void analyser_WWWW_huhlaev (
             bool pass = true;
             TLorentzVector muon_vector = make_lepton(reader, j, false);
             for(auto i : jets_indexes) {
-                TLorentzVector jet_vector = make_jet(reader, j);
+                TLorentzVector jet_vector = make_jet(reader, i);
                 if (jet_vector.DeltaR(muon_vector) > TMath::Min(0.4, 0.04 + 10. / muon_vector.Pt())) continue;
                 pass = false;
                 break;
@@ -235,7 +238,7 @@ void analyser_WWWW_huhlaev (
                     selections->Fill("Removed muons cause big isolationVar", 1);
                 }
             }
-        }
+         } 
 
         selections->Fill("Selected electrons", electrons_indexes.size());
         selections->Fill("Selected muons", muons_indexes.size());
@@ -253,13 +256,11 @@ void analyser_WWWW_huhlaev (
         }
         sort(leptons.begin(), leptons.end()); // To know leading, subleading lepton, operator< has been overridden
 
-
         // EVENTS SELECTION =========================================================
 
 
         ULong64_t number_leptons = leptons.size();
-        if (number_leptons < 2 and number_leptons > 4) continue;
-
+        if (number_leptons < 2 || number_leptons > 4) continue;
         selections->Fill("At least 2 electrons or muons", 1);
 
         bool b_tag = false;
@@ -271,7 +272,6 @@ void analyser_WWWW_huhlaev (
         }
         if (b_tag) continue;
         selections->Fill("Events with no b tags", 1);
-
 
         vector<vector<selected_lepton>> sfos; // Same-flavor opposite sign (SFOS)
         Long64_t sum_leptons_charge = 0, min_pt = 1000, max_pt = 0;
@@ -293,12 +293,11 @@ void analyser_WWWW_huhlaev (
             if (TMath::Abs(sum_leptons_charge) != 2) continue;
             selections->Fill("2l channel - TMath::Abs(sum_leptons_charge) != 2", 1);
 
-            cout << jets_indexes.size() << endl;
             if (jets_indexes.size() < 3) continue;
             selections->Fill("2l channel - jets_indexes.size() < 3", 1);
 
             TLorentzVector sum_leptons = leptons[0].vec + leptons[1].vec;
-
+	   
             double nearest_R_sub_leading = 100000000, nearest_R_leading = 100000000;
             ULong64_t index_nearest_jet_leading; // Compared to leading lepton (leading and sub_leading - about leptons)
             for (auto i : jets_indexes) {
@@ -326,37 +325,39 @@ void analyser_WWWW_huhlaev (
             TLorentzVector vec_leading_lepton_jets = leptons[1].vec + make_jet(reader, index_nearest_jet_leading) +
                                                     make_jet(reader, sub_nearest_jet_index);
 
+	    if (leptons[0].pt <= 20 || leptons[1].pt <= 30) continue;
+		
             if (leptons[0].is_electron && leptons[1].is_electron) {
                 if (TMath::Abs(sum_leptons.M() - 91.1876) <= 10) continue;  // Comparison with M_Z
                 if (sum_leptons.M() > 270 || sum_leptons.M() < 55) continue;
                 if (nearest_R_leading > 1.15 || nearest_R_leading < 0.2) continue;
                 if (nearest_R_sub_leading > 1.4 || nearest_R_sub_leading < 0.2) continue;
                 if (vec_leading_lepton_jets.M() < 40 || vec_leading_lepton_jets.M() > 285) continue;
-
+		selections->Fill("2l - 2 electrons", 1);
             }
             else if (!leptons[0].is_electron && !leptons[1].is_electron) {
                 if (sum_leptons.M() > 250 || sum_leptons.M() < 60) continue;
                 if (nearest_R_leading > 0.75 || nearest_R_leading < 0.2) continue;
                 if (nearest_R_sub_leading > 1.05 || nearest_R_sub_leading < 0.2) continue;
                 if (vec_leading_lepton_jets.M() < 30 || vec_leading_lepton_jets.M() > 310) continue;
-
+		selections->Fill("2l - 2 muons", 1);
             }
             else { // If there are one electron and one muon
                 if (sum_leptons.M() > 250 || sum_leptons.M() < 75) continue;
                 if (nearest_R_leading > 0.8 || nearest_R_leading < 0.2) continue;
                 if (nearest_R_sub_leading > 1.15 || nearest_R_sub_leading < 0.2) continue;
                 if (vec_leading_lepton_jets.M() < 35 || vec_leading_lepton_jets.M() > 350) continue;
-            }
+		selections->Fill("2l - muon and electoron", 1);
+            } 
 
-            if (leptons[0].pt <= 20 or leptons[1].pt <= 30) continue;
             selections->Fill("2l channel - selected", 1);
         }
-
         else if (number_leptons == 3) {
-
+	    selections->Fill("3l events - ", 1);
             if (TMath::Abs(sum_leptons_charge) != 1) continue;
-            selections->Fill("Correct summary charge", 1);
+            selections->Fill("3l events, correct summary charge", 1);
             if (jets_indexes.size() < 2) continue;
+	    selections->Fill("3l events, number_jets >= 2", 1);
 
             selected_lepton l1, l2, l3;
             double closest_to_Z_mass = 1000000;
@@ -382,6 +383,7 @@ void analyser_WWWW_huhlaev (
                     break;
                 }
             }
+	    
             if (l2.vec.DeltaR(l1.vec) > l3.vec.DeltaR(l1.vec)) {
                 selected_lepton tmp = l2;
                 l2 = l3;
@@ -398,28 +400,32 @@ void analyser_WWWW_huhlaev (
                 }
             }
             if (too_low_mass) continue;
-
+	    
+	    selections->Fill("3l - Normall SFOSs mass and pt", 1);
             double nearest_R = 100000000, sub_nearest_R = 100000000;
-            ULong64_t index_nearest_jet, index_sub_nearest_jet;
+	    ULong64_t index_nearest_jet = 0, index_sub_nearest_jet = 0;
             for (auto i : jets_indexes) {
                 TLorentzVector vec_jet = make_jet(reader, i);
                 double R = vec_jet.DeltaR(l3.vec);
                 if (R < nearest_R) {
-                    sub_nearest_R = nearest_R;
-                    index_sub_nearest_jet = index_nearest_jet;
                     nearest_R = R;
                     index_nearest_jet = i;
                 }
-                else if (R < sub_nearest_R) {
-                    sub_nearest_R = R;
-                    index_sub_nearest_jet = i;
-                }
             }
+	    for (auto i : jets_indexes) {
+		TLorentzVector vec_jet = make_jet(reader, i);
+		double R = vec_jet.DeltaR(l3.vec);
+		if (R < sub_nearest_R && i != index_nearest_jet) {
+		    sub_nearest_R = R;
+		    index_sub_nearest_jet = i;
+		}
+	    }       
 
             TLorentzVector sum23 = l2.vec + l3.vec;
             TLorentzVector sum3_jet = l3.vec + make_jet(reader, index_nearest_jet);
-            TLorentzVector sum3_two_jets = sum3_jet + make_jet(reader, index_sub_nearest_jet);
-
+            TLorentzVector sum3_two_jets = sum3_jet;
+	    if (jets_indexes.size() > 1) sum3_two_jets += make_jet(reader, index_sub_nearest_jet);
+//cout << "3l channel, SFOS - " << number_sfos << ", sum23 mass = " << sum23.M() << ", DeltaR = " << l2.vec.DeltaR(l3.vec)<< ", sum_jet mass = " << sum3_jet.M() << ", sum_jetss mass = " << sum3_two_jets.M() << endl;
             if (number_sfos == 0) {
                 if (l2.vec.DeltaR(l3.vec) < 2.47 || l2.vec.DeltaR(l3.vec) > 5.85) continue;
                 if (sum23.M() < 10 || sum23.M() > 70) continue;
@@ -433,18 +439,18 @@ void analyser_WWWW_huhlaev (
                 if (sum3_two_jets.M() < 50 || sum3_two_jets.M() > 115) continue;
                 if (sum3_jet.M() < 15 || sum3_jet.M() > 45) continue;
 
-            }
+            } 
             selections->Fill("Selected 3 leptons events", 1);
 
         }
 
         else {  //  FOUR LEPTONS CHANNEL
-
+	selections->Fill("4l events", 1);
             if (TMath::Abs(sum_leptons_charge) != 0) continue;
-            selections->Fill("Correct summary charge", 1);
+            selections->Fill("4l, Correct summary charge", 1);
             if (jets_indexes.size() < 2) continue;
             if (leptons[3].pt <= 22) continue;
-
+		selections->Fill("4l, jets >= 2 and highest pt > 22", 1);
             bool too_low_mass = false;
             for (auto i : sfos) {
                 TLorentzVector sum = i[0].vec + i[1].vec;
@@ -454,7 +460,7 @@ void analyser_WWWW_huhlaev (
                 }
             }
             if (too_low_mass) continue;
-
+		selections->Fill("4l - normal SFOSs mass", 1);
             selected_lepton l0, l1, l2, l3;
             if (number_sfos == 0) {
 
@@ -544,11 +550,10 @@ void analyser_WWWW_huhlaev (
                         selections->Fill("Summary mass of 4 leptons > 180 GeV", 1);
                     }
                 }
-            }
-        }
+            } 
+        } 
 
         selections->Fill("Selected events", 1);
-
     }
 
     for(int i = 1; i < 100; ++i) {
