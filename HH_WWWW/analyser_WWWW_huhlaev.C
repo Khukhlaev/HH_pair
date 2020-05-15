@@ -91,13 +91,19 @@ void analyser_WWWW_huhlaev (
     }
     reader_lhe.Init(lhe_file.c_str());
 
-    TH1D *selections = new TH1D("selections", "selections", 100, 0, 100);
+    TH1D *selections = new TH1D("selections", "selections", 200, 0, 100);
     selections->Fill("Total", 0);
     selections->Fill("Total (weighted)", 0);
     selections->Fill("Selected events", 0);
     selections->Fill("Selected events (weighted)", 0);
     selections->Fill("Selected events Pdf_Up", 0);
     selections->Fill("Selected events Pdf_Down", 0);
+    selections->Fill("Selected events muR_05_muF_05", 0);
+    selections->Fill("Selected events muR_05_muF_10", 0);
+    selections->Fill("Selected events muR_10_muF_05", 0);
+    selections->Fill("Selected events muR_10_muF_20", 0);
+    selections->Fill("Selected events muR_20_muF_10", 0);
+    selections->Fill("Selected events muR_20_muF_20", 0);
 
     vector<int> pdf_indexes;
     if (lhe_format) for (int i = 9; i < 40; i++) pdf_indexes.push_back(i);
@@ -126,20 +132,40 @@ void analyser_WWWW_huhlaev (
     selections->Fill("2l channel - number_leptons == 2", 0);
     selections->Fill("2l channel - TMath::Abs(sum_leptons_charge) == 2", 0);
     selections->Fill("2l channel - jets_indexes.size() >= 3", 0);
-    selections->Fill("2l channel - MET > 10", 0); // !
+    selections->Fill("2l channel - MET > 10", 0);
     selections->Fill("2l channel - selected", 0);
     selections->Fill("2l - 2 electrons", 0);
     selections->Fill("2l - 2 electrons (weighted)", 0);
     selections->Fill("2l - 2 electrons Pdf_Up", 0);
     selections->Fill("2l - 2 electrons Pdf_Down", 0);
+    selections->Fill("2l - 2 electrons muR_05_muF_05", 0);
+    selections->Fill("2l - 2 electrons muR_05_muF_10", 0);
+    selections->Fill("2l - 2 electrons muR_10_muF_05", 0);
+    selections->Fill("2l - 2 electrons muR_10_muF_20", 0);
+    selections->Fill("2l - 2 electrons muR_20_muF_10", 0);
+    selections->Fill("2l - 2 electrons muR_20_muF_20", 0);
+
     selections->Fill("2l - 2 muons", 0);
     selections->Fill("2l - 2 muons (weighted)", 0);
     selections->Fill("2l - 2 muons Pdf_Up", 0);
     selections->Fill("2l - 2 muons Pdf_Down", 0);
+    selections->Fill("2l - 2 muons muR_05_muF_05", 0);
+    selections->Fill("2l - 2 muons muR_05_muF_10", 0);
+    selections->Fill("2l - 2 muons muR_10_muF_05", 0);
+    selections->Fill("2l - 2 muons muR_10_muF_20", 0);
+    selections->Fill("2l - 2 muons muR_20_muF_10", 0);
+    selections->Fill("2l - 2 muons muR_20_muF_20", 0);
+
     selections->Fill("2l - muon and electoron", 0);
     selections->Fill("2l - muon and electoron (weighted)", 0);
     selections->Fill("2l - muon and electoron Pdf_Up", 0);
     selections->Fill("2l - muon and electoron Pdf_Down", 0);
+    selections->Fill("2l - 2 muon and electoron muR_05_muF_05", 0);
+    selections->Fill("2l - 2 muon and electoron muR_05_muF_10", 0);
+    selections->Fill("2l - 2 muon and electoron muR_10_muF_05", 0);
+    selections->Fill("2l - 2 muon and electoron muR_10_muF_20", 0);
+    selections->Fill("2l - 2 muon and electoron muR_20_muF_10", 0);
+    selections->Fill("2l - 2 muon and electoron muR_20_muF_20", 0);
 
     selections->Fill("3l events - ", 0);
     selections->Fill("3l events, correct summary charge", 0);
@@ -150,14 +176,28 @@ void analyser_WWWW_huhlaev (
     selections->Fill("3l - selected (weighted)", 0);
     selections->Fill("3l - selected Pdf_Up", 0);
     selections->Fill("3l - selected Pdf_Down", 0);
+
     selections->Fill("3l - selected SFOS=0", 0);
     selections->Fill("3l - selected SFOS=0 (weighted)", 0);
     selections->Fill("3l - selected SFOS=0 Pdf_Up", 0);
     selections->Fill("3l - selected SFOS=0 Pdf_Down", 0);
+    selections->Fill("3l - selected SFOS=0 muR_05_muF_05", 0);
+    selections->Fill("3l - selected SFOS=0 muR_05_muF_10", 0);
+    selections->Fill("3l - selected SFOS=0 muR_10_muF_05", 0);
+    selections->Fill("3l - selected SFOS=0 muR_10_muF_20", 0);
+    selections->Fill("3l - selected SFOS=0 muR_20_muF_10", 0);
+    selections->Fill("3l - selected SFOS=0 muR_20_muF_20", 0);
+
     selections->Fill("3l - selected SFOS=1,2", 0);
     selections->Fill("3l - selected SFOS=1,2 (weighted)", 0);
     selections->Fill("3l - selected SFOS=1,2 Pdf_Up", 0);
     selections->Fill("3l - selected SFOS=1,2 Pdf_Down", 0);
+    selections->Fill("3l - selected SFOS=1,2 muR_05_muF_05", 0);
+    selections->Fill("3l - selected SFOS=1,2 muR_05_muF_10", 0);
+    selections->Fill("3l - selected SFOS=1,2 muR_10_muF_05", 0);
+    selections->Fill("3l - selected SFOS=1,2 muR_10_muF_20", 0);
+    selections->Fill("3l - selected SFOS=1,2 muR_20_muF_10", 0);
+    selections->Fill("3l - selected SFOS=1,2 muR_20_muF_20", 0);
 
     selections->Fill("4l events", 0);
     selections->Fill("4l, Correct summary charge", 0);
@@ -172,10 +212,23 @@ void analyser_WWWW_huhlaev (
     selections->Fill("4l - sfos == 0, M_4l < 180 GeV (weighted)", 0);
     selections->Fill("4l - sfos == 0, M_4l < 180 GeV Pdf_Up", 0);
     selections->Fill("4l - sfos == 0, M_4l < 180 GeV Pdf_Down", 0);
+    selections->Fill("4l - sfos == 0, M_4l < 180 muR_05_muF_05", 0);
+    selections->Fill("4l - sfos == 0, M_4l < 180 muR_05_muF_10", 0);
+    selections->Fill("4l - sfos == 0, M_4l < 180 muR_10_muF_05", 0);
+    selections->Fill("4l - sfos == 0, M_4l < 180 muR_10_muF_20", 0);
+    selections->Fill("4l - sfos == 0, M_4l < 180 muR_20_muF_10", 0);
+    selections->Fill("4l - sfos == 0, M_4l < 180 muR_20_muF_20", 0);
+
     selections->Fill("4l - sfos == 0, M_4l > 180 GeV", 0);
     selections->Fill("4l - sfos == 0, M_4l > 180 GeV (weighted)", 0);
     selections->Fill("4l - sfos == 0, M_4l > 180 GeV Pdf_Up", 0);
     selections->Fill("4l - sfos == 0, M_4l > 180 GeV Pdf_Down", 0);
+    selections->Fill("4l - sfos == 0, M_4l > 180 muR_05_muF_05", 0);
+    selections->Fill("4l - sfos == 0, M_4l > 180 muR_05_muF_10", 0);
+    selections->Fill("4l - sfos == 0, M_4l > 180 muR_10_muF_05", 0);
+    selections->Fill("4l - sfos == 0, M_4l > 180 muR_10_muF_20", 0);
+    selections->Fill("4l - sfos == 0, M_4l > 180 muR_20_muF_10", 0);
+    selections->Fill("4l - sfos == 0, M_4l > 180 muR_20_muF_20", 0);
 
     selections->Fill("4l - sfos == 1, M_4l < 180 GeV", 0);
     selections->Fill("4l - sfos == 1, M_4l > 180 GeV", 0);
@@ -184,10 +237,23 @@ void analyser_WWWW_huhlaev (
     selections->Fill("4l - sfos == 2, M_4l < 180 GeV (weighted)", 0);
     selections->Fill("4l - sfos == 2, M_4l < 180 GeV Pdf_Up", 0);
     selections->Fill("4l - sfos == 2, M_4l < 180 GeV Pdf_Down", 0);
+    selections->Fill("4l - sfos == 2, M_4l < 180 muR_05_muF_05", 0);
+    selections->Fill("4l - sfos == 2, M_4l < 180 muR_05_muF_10", 0);
+    selections->Fill("4l - sfos == 2, M_4l < 180 muR_10_muF_05", 0);
+    selections->Fill("4l - sfos == 2, M_4l < 180 muR_10_muF_20", 0);
+    selections->Fill("4l - sfos == 2, M_4l < 180 muR_20_muF_10", 0);
+    selections->Fill("4l - sfos == 2, M_4l < 180 muR_20_muF_20", 0);
+
     selections->Fill("4l - sfos == 2, M_4l > 180 GeV", 0);
     selections->Fill("4l - sfos == 2, M_4l > 180 GeV (weighted)", 0);
     selections->Fill("4l - sfos == 2, M_4l > 180 GeV Pdf_Up", 0);
     selections->Fill("4l - sfos == 2, M_4l > 180 GeV Pdf_Down", 0);
+    selections->Fill("4l - sfos == 2, M_4l > 180 muR_05_muF_05", 0);
+    selections->Fill("4l - sfos == 2, M_4l > 180 muR_05_muF_10", 0);
+    selections->Fill("4l - sfos == 2, M_4l > 180 muR_10_muF_05", 0);
+    selections->Fill("4l - sfos == 2, M_4l > 180 muR_10_muF_20", 0);
+    selections->Fill("4l - sfos == 2, M_4l > 180 muR_20_muF_10", 0);
+    selections->Fill("4l - sfos == 2, M_4l > 180 muR_20_muF_20", 0);
 
     Long64_t entries = tree->GetEntries();
     double weight_sum = 0;
@@ -212,6 +278,31 @@ void analyser_WWWW_huhlaev (
 
         selections->Fill("Pdf_Up", weight_pdf_up);
         selections->Fill("Pdf_Down", weight_pdf_down);
+
+        double weights_muR_05_muF_05, weights_muR_05_muF_10, weights_muR_10_muF_05, weights_muR_10_muF_20,
+                weights_muR_20_muF_10, weights_muR_20_muF_20;
+        if(lhe_format) {
+            weights_muR_05_muF_05 = lhe_info->weights_v[8] ;
+            weights_muR_05_muF_10 = lhe_info->weights_v[6] ;
+            weights_muR_10_muF_05 = lhe_info->weights_v[2] ;
+            weights_muR_10_muF_20 = lhe_info->weights_v[1] ;
+            weights_muR_20_muF_10 = lhe_info->weights_v[3] ;
+            weights_muR_20_muF_20 = lhe_info->weights_v[4] ;
+        } else {
+            weights_muR_05_muF_05 = lhe_info->weights_v[0] ;
+            weights_muR_05_muF_10 = lhe_info->weights_v[5] ;
+            weights_muR_10_muF_05 = lhe_info->weights_v[15] ;
+            weights_muR_10_muF_20 = lhe_info->weights_v[24] ;
+            weights_muR_20_muF_10 = lhe_info->weights_v[34] ;
+            weights_muR_20_muF_20 = lhe_info->weights_v[39] ;
+        }
+
+        selections->Fill( "muR_05_muF_05", weights_muR_05_muF_05 );
+        selections->Fill( "muR_05_muF_10", weights_muR_05_muF_10 );
+        selections->Fill( "muR_10_muF_05", weights_muR_10_muF_05 );
+        selections->Fill( "muR_10_muF_20", weights_muR_10_muF_20 );
+        selections->Fill( "muR_20_muF_10", weights_muR_20_muF_10 );
+        selections->Fill( "muR_20_muF_20", weights_muR_20_muF_20 );
 
         // OBJECT SELECTIONS ==============================================
 
@@ -412,6 +503,12 @@ void analyser_WWWW_huhlaev (
                 selections->Fill("2l - 2 electrons (weighted)", weight);
                 selections->Fill("2l - 2 electrons Pdf_Up", weight_pdf_up);
                 selections->Fill("2l - 2 electrons Pdf_Down", weight_pdf_down);
+                selections->Fill("2l - 2 electrons muR_05_muF_05", weights_muR_05_muF_05);
+                selections->Fill("2l - 2 electrons muR_05_muF_10", weights_muR_05_muF_10);
+                selections->Fill("2l - 2 electrons muR_10_muF_05", weights_muR_10_muF_05);
+                selections->Fill("2l - 2 electrons muR_10_muF_20", weights_muR_10_muF_20);
+                selections->Fill("2l - 2 electrons muR_20_muF_10", weights_muR_20_muF_10);
+                selections->Fill("2l - 2 electrons muR_20_muF_20", weights_muR_20_muF_20);
             }
             else if (!leptons[0].is_electron && !leptons[1].is_electron) {
                 if (sum_leptons.M() > 250 || sum_leptons.M() < 60) continue;
@@ -422,6 +519,12 @@ void analyser_WWWW_huhlaev (
                 selections->Fill("2l - 2 muons (weighted)", weight);
                 selections->Fill("2l - 2 muons Pdf_Up", weight_pdf_up);
                 selections->Fill("2l - 2 muons Pdf_Down", weight_pdf_down);
+                selections->Fill("2l - 2 muons muR_05_muF_05", weights_muR_05_muF_05);
+                selections->Fill("2l - 2 muons muR_05_muF_10", weights_muR_05_muF_10);
+                selections->Fill("2l - 2 muons muR_10_muF_05", weights_muR_10_muF_05);
+                selections->Fill("2l - 2 muons muR_10_muF_20", weights_muR_10_muF_20);
+                selections->Fill("2l - 2 muons muR_20_muF_10", weights_muR_20_muF_10);
+                selections->Fill("2l - 2 muons muR_20_muF_20", weights_muR_20_muF_20);
             }
             else { // If there are one electron and one muon
                 if (sum_leptons.M() > 250 || sum_leptons.M() < 75) continue;
@@ -432,6 +535,13 @@ void analyser_WWWW_huhlaev (
                 selections->Fill("2l - muon and electoron (weighted)", weight);
                 selections->Fill("2l - muon and electoron Pdf_Up", weight_pdf_up);
                 selections->Fill("2l - muon and electoron Pdf_Down", weight_pdf_down);
+                selections->Fill("2l - 2 muon and electoron muR_05_muF_05", weights_muR_05_muF_05);
+                selections->Fill("2l - 2 muon and electoron muR_05_muF_10", weights_muR_05_muF_10);
+                selections->Fill("2l - 2 muon and electoron muR_10_muF_05", weights_muR_10_muF_05);
+                selections->Fill("2l - 2 muon and electoron muR_10_muF_20", weights_muR_10_muF_20);
+                selections->Fill("2l - 2 muon and electoron muR_20_muF_10", weights_muR_20_muF_10);
+                selections->Fill("2l - 2 muon and electoron muR_20_muF_20", weights_muR_20_muF_20);
+
             }
 
             selections->Fill("2l channel - selected", 1);
@@ -520,6 +630,12 @@ void analyser_WWWW_huhlaev (
                 selections->Fill("3l - selected SFOS=0 (weighted)", weight);
                 selections->Fill("3l - selected SFOS=0 Pdf_Up", weight_pdf_up);
                 selections->Fill("3l - selected SFOS=0 Pdf_Down", weight_pdf_down);
+                selections->Fill("3l - selected SFOS=0 muR_05_muF_05", weights_muR_05_muF_05);
+                selections->Fill("3l - selected SFOS=0 muR_05_muF_10", weights_muR_05_muF_10);
+                selections->Fill("3l - selected SFOS=0 muR_10_muF_05", weights_muR_10_muF_05);
+                selections->Fill("3l - selected SFOS=0 muR_10_muF_20", weights_muR_10_muF_20);
+                selections->Fill("3l - selected SFOS=0 muR_20_muF_10", weights_muR_20_muF_10);
+                selections->Fill("3l - selected SFOS=0 muR_20_muF_20", weights_muR_20_muF_20);
             }
             else { // If number_sfos = 1 or 2
                 if (l2.vec.DeltaR(l3.vec) < 2.16 || l2.vec.DeltaR(l3.vec) > 3.5) continue;
@@ -527,9 +643,15 @@ void analyser_WWWW_huhlaev (
                 if (sum3_two_jets.M() < 50 || sum3_two_jets.M() > 115) continue;
                 if (sum3_jet.M() < 15 || sum3_jet.M() > 45) continue;
                 selections->Fill("3l - selected SFOS=1,2", 1);
-                selections->Fill("3l - selected SFOS=1,2 (weighed)", weight);
+                selections->Fill("3l - selected SFOS=1,2 (weighted)", weight);
                 selections->Fill("3l - selected SFOS=1,2 Pdf_Up", weight_pdf_up);
                 selections->Fill("3l - selected SFOS=1,2 Pdf_Down", weight_pdf_down);
+                selections->Fill("3l - selected SFOS=1,2 muR_05_muF_05", weights_muR_05_muF_05);
+                selections->Fill("3l - selected SFOS=1,2 muR_05_muF_10", weights_muR_05_muF_10);
+                selections->Fill("3l - selected SFOS=1,2 muR_10_muF_05", weights_muR_10_muF_05);
+                selections->Fill("3l - selected SFOS=1,2 muR_10_muF_20", weights_muR_10_muF_20);
+                selections->Fill("3l - selected SFOS=1,2 muR_20_muF_10", weights_muR_20_muF_10);
+                selections->Fill("3l - selected SFOS=1,2 muR_20_muF_20", weights_muR_20_muF_20);
             }
             selections->Fill("3l - selected", 1);
             selections->Fill("3l - selected (weighted)", weight);
@@ -592,12 +714,24 @@ void analyser_WWWW_huhlaev (
                     selections->Fill("4l - sfos == 0, M_4l < 180 GeV (weighted)", weight);
                     selections->Fill("4l - sfos == 0, M_4l < 180 GeV Pdf_Up", weight_pdf_up);
                     selections->Fill("4l - sfos == 0, M_4l < 180 GeV Pdf_Down", weight_pdf_down);
+                    selections->Fill("4l - sfos == 0, M_4l < 180 muR_05_muF_05", weights_muR_05_muF_05);
+                    selections->Fill("4l - sfos == 0, M_4l < 180 muR_05_muF_10", weights_muR_05_muF_10);
+                    selections->Fill("4l - sfos == 0, M_4l < 180 muR_10_muF_05", weights_muR_10_muF_05);
+                    selections->Fill("4l - sfos == 0, M_4l < 180 muR_10_muF_20", weights_muR_10_muF_20);
+                    selections->Fill("4l - sfos == 0, M_4l < 180 muR_20_muF_10", weights_muR_20_muF_10);
+                    selections->Fill("4l - sfos == 0, M_4l < 180 muR_20_muF_20", weights_muR_20_muF_20);
                 }
                 else {
                     selections->Fill("4l - sfos == 0, M_4l > 180 GeV", 1);
                     selections->Fill("4l - sfos == 0, M_4l > 180 GeV (weighted)", weight);
                     selections->Fill("4l - sfos == 0, M_4l > 180 GeV Pdf_Up", weight_pdf_up);
                     selections->Fill("4l - sfos == 0, M_4l > 180 GeV Pdf_Down", weight_pdf_down);
+                    selections->Fill("4l - sfos == 0, M_4l > 180 muR_05_muF_05", weights_muR_05_muF_05);
+                    selections->Fill("4l - sfos == 0, M_4l > 180 muR_05_muF_10", weights_muR_05_muF_10);
+                    selections->Fill("4l - sfos == 0, M_4l > 180 muR_10_muF_05", weights_muR_10_muF_05);
+                    selections->Fill("4l - sfos == 0, M_4l > 180 muR_10_muF_20", weights_muR_10_muF_20);
+                    selections->Fill("4l - sfos == 0, M_4l > 180 muR_20_muF_10", weights_muR_20_muF_10);
+                    selections->Fill("4l - sfos == 0, M_4l > 180 muR_20_muF_20", weights_muR_20_muF_20);
                 }
             }
             else { // If number_sfos > 0
@@ -649,6 +783,12 @@ void analyser_WWWW_huhlaev (
                         selections->Fill("4l - sfos == 2, M_4l < 180 GeV (weighted)", weight);
                         selections->Fill("4l - sfos == 2, M_4l < 180 GeV Pdf_Up", weight_pdf_up);
                         selections->Fill("4l - sfos == 2, M_4l < 180 GeV Pdf_Down", weight_pdf_down);
+                        selections->Fill("4l - sfos == 2, M_4l < 180 muR_05_muF_05", weights_muR_05_muF_05);
+                        selections->Fill("4l - sfos == 2, M_4l < 180 muR_05_muF_10", weights_muR_05_muF_10);
+                        selections->Fill("4l - sfos == 2, M_4l < 180 muR_10_muF_05", weights_muR_10_muF_05);
+                        selections->Fill("4l - sfos == 2, M_4l < 180 muR_10_muF_20", weights_muR_10_muF_20);
+                        selections->Fill("4l - sfos == 2, M_4l < 180 muR_20_muF_10", weights_muR_20_muF_10);
+                        selections->Fill("4l - sfos == 2, M_4l < 180 muR_20_muF_20", weights_muR_20_muF_20);
                     }
                     else {
                         if (sum_01.M() >= 70 && sum_01.M() <= 110) continue;
@@ -656,6 +796,12 @@ void analyser_WWWW_huhlaev (
                         selections->Fill("4l - sfos == 2, M_4l > 180 GeV (weighted)", weight);
                         selections->Fill("4l - sfos == 2, M_4l > 180 GeV Pdf_Up", weight_pdf_up);
                         selections->Fill("4l - sfos == 2, M_4l > 180 GeV Pdf_Down", weight_pdf_down);
+                        selections->Fill("4l - sfos == 2, M_4l > 180 muR_05_muF_05", weights_muR_05_muF_05);
+                        selections->Fill("4l - sfos == 2, M_4l > 180 muR_05_muF_10", weights_muR_05_muF_10);
+                        selections->Fill("4l - sfos == 2, M_4l > 180 muR_10_muF_05", weights_muR_10_muF_05);
+                        selections->Fill("4l - sfos == 2, M_4l > 180 muR_10_muF_20", weights_muR_10_muF_20);
+                        selections->Fill("4l - sfos == 2, M_4l > 180 muR_20_muF_10", weights_muR_20_muF_10);
+                        selections->Fill("4l - sfos == 2, M_4l > 180 muR_20_muF_20", weights_muR_20_muF_20);
                     }
 
                 }
@@ -670,34 +816,16 @@ void analyser_WWWW_huhlaev (
         selections->Fill("Selected events (weighted)", weight);
         selections->Fill("Selected events Pdf_Up", weight_pdf_up);
         selections->Fill("Selected events Pdf_Down", weight_pdf_down);
+        selections->Fill("Selected events muR_05_muF_05", weights_muR_05_muF_05);
+        selections->Fill("Selected events muR_05_muF_10", weights_muR_05_muF_10);
+        selections->Fill("Selected events muR_10_muF_05", weights_muR_10_muF_05);
+        selections->Fill("Selected events muR_10_muF_20", weights_muR_10_muF_20);
+        selections->Fill("Selected events muR_20_muF_10", weights_muR_20_muF_10);
+        selections->Fill("Selected events muR_20_muF_20", weights_muR_20_muF_20);
 
-        double weights_muR_05_muF_05, weights_muR_05_muF_10, weights_muR_10_muF_05, weights_muR_10_muF_20,
-                weights_muR_20_muF_10, weights_muR_20_muF_20;
-        if(lhe_format) {
-            weights_muR_05_muF_05 = lhe_info->weights_v[8] ;
-            weights_muR_05_muF_10 = lhe_info->weights_v[6] ;
-            weights_muR_10_muF_05 = lhe_info->weights_v[2] ;
-            weights_muR_10_muF_20 = lhe_info->weights_v[1] ;
-            weights_muR_20_muF_10 = lhe_info->weights_v[3] ;
-            weights_muR_20_muF_20 = lhe_info->weights_v[4] ;
-        } else {
-            weights_muR_05_muF_05 = lhe_info->weights_v[0] ;
-            weights_muR_05_muF_10 = lhe_info->weights_v[5] ;
-            weights_muR_10_muF_05 = lhe_info->weights_v[15] ;
-            weights_muR_10_muF_20 = lhe_info->weights_v[24] ;
-            weights_muR_20_muF_10 = lhe_info->weights_v[34] ;
-            weights_muR_20_muF_20 = lhe_info->weights_v[39] ;
-        }
-
-        selections->Fill( "muR_05_muF_05", weights_muR_05_muF_05 );
-        selections->Fill( "muR_05_muF_10", weights_muR_05_muF_10 );
-        selections->Fill( "muR_10_muF_05", weights_muR_10_muF_05 );
-        selections->Fill( "muR_10_muF_20", weights_muR_10_muF_20 );
-        selections->Fill( "muR_20_muF_10", weights_muR_20_muF_10 );
-        selections->Fill( "muR_20_muF_20", weights_muR_20_muF_20 );
     }
 
-    for(int i = 1; i < 100; ++i) {
+    for(int i = 1; i < 200; ++i) {
         double passed = selections->GetBinContent(i);
         string label = selections->GetXaxis()->GetBinLabel(i);
 
@@ -715,14 +843,20 @@ dic["Selected events"]=[1700, 0.0034, 0.258726]
 dic["Selected events (weighted)"]=[22.3431, 4.46862e-05, 0.00340044]
 dic["Selected events Pdf_Up"]=[22.6407, 4.52813e-05, 0.00344572]
 dic["Selected events Pdf_Down"]=[22.0455, 4.40911e-05, 0.00335515]
+dic["Selected events muR_05_muF_05"]=[28.1847, 5.63694e-05, 0.00428948]
+dic["Selected events muR_05_muF_10"]=[26.7414, 5.34828e-05, 0.00406982]
+dic["Selected events muR_10_muF_05"]=[23.5514, 4.71027e-05, 0.00358432]
+dic["Selected events muR_10_muF_20"]=[21.1876, 4.23753e-05, 0.00322458]
+dic["Selected events muR_20_muF_10"]=[18.9599, 3.79199e-05, 0.00288555]
+dic["Selected events muR_20_muF_20"]=[17.9781, 3.59563e-05, 0.00273612]
 dic["Pdf_Up"]=[6672.35, 0.0133447, 1.01548]
 dic["Pdf_Down"]=[6468.96, 0.0129379, 0.984523]
-dic["muR_05_muF_05"]=[28.1847, 5.63694e-05, 0.00428948]
-dic["muR_05_muF_10"]=[26.7414, 5.34828e-05, 0.00406982]
-dic["muR_10_muF_05"]=[23.5514, 4.71027e-05, 0.00358432]
-dic["muR_10_muF_20"]=[21.1876, 4.23753e-05, 0.00322458]
-dic["muR_20_muF_10"]=[18.9599, 3.79199e-05, 0.00288555]
-dic["muR_20_muF_20"]=[17.9781, 3.59563e-05, 0.00273612]
+dic["muR_05_muF_05"]=[8271.83, 0.0165437, 1.2589]
+dic["muR_05_muF_10"]=[7879.6, 0.0157592, 1.19921]
+dic["muR_10_muF_05"]=[6898.45, 0.0137969, 1.04989]
+dic["muR_10_muF_20"]=[6252.21, 0.0125044, 0.951535]
+dic["muR_20_muF_10"]=[5566.64, 0.0111333, 0.847197]
+dic["muR_20_muF_20"]=[5296.46, 0.0105929, 0.806078]
 dic["Pre-selected muons"]=[166960, 0.33392, 25.4099]
 dic["Pre-selected electrons"]=[148692, 0.297384, 22.6297]
 dic["Minimum lepton p_t > 10 GeV"]=[500000, 1, 76.0959]
@@ -743,14 +877,32 @@ dic["2l - 2 electrons"]=[304, 0.000608, 0.0462663]
 dic["2l - 2 electrons (weighted)"]=[3.99547, 7.99094e-06, 0.000608078]
 dic["2l - 2 electrons Pdf_Up"]=[4.04738, 8.09475e-06, 0.000615977]
 dic["2l - 2 electrons Pdf_Down"]=[3.94357, 7.88713e-06, 0.000600178]
+dic["2l - 2 electrons muR_05_muF_05"]=[5.0289, 1.00578e-05, 0.000765358]
+dic["2l - 2 electrons muR_05_muF_10"]=[4.787, 9.574e-06, 0.000728542]
+dic["2l - 2 electrons muR_10_muF_05"]=[4.19775, 8.3955e-06, 0.000638863]
+dic["2l - 2 electrons muR_10_muF_20"]=[3.79954, 7.59909e-06, 0.000578259]
+dic["2l - 2 electrons muR_20_muF_10"]=[3.38752, 6.77504e-06, 0.000515553]
+dic["2l - 2 electrons muR_20_muF_20"]=[3.2212, 6.4424e-06, 0.00049024]
 dic["2l - 2 muons"]=[442, 0.000884, 0.0672687]
 dic["2l - 2 muons (weighted)"]=[5.80921, 1.16184e-05, 0.000884113]
 dic["2l - 2 muons Pdf_Up"]=[5.88915, 1.17783e-05, 0.00089628]
 dic["2l - 2 muons Pdf_Down"]=[5.72926, 1.14585e-05, 0.000871946]
+dic["2l - 2 muons muR_05_muF_05"]=[7.34034, 1.46807e-05, 0.00111714]
+dic["2l - 2 muons muR_05_muF_10"]=[6.94834, 1.38967e-05, 0.00105748]
+dic["2l - 2 muons muR_10_muF_05"]=[6.1375, 1.2275e-05, 0.000934077]
+dic["2l - 2 muons muR_10_muF_20"]=[5.49762, 1.09952e-05, 0.000836692]
+dic["2l - 2 muons muR_20_muF_10"]=[4.93218, 9.86436e-06, 0.000750637]
+dic["2l - 2 muons muR_20_muF_20"]=[4.66733, 9.33465e-06, 0.000710329]
 dic["2l - muon and electoron"]=[639, 0.001278, 0.0972505]
 dic["2l - muon and electoron (weighted)"]=[8.39838, 1.67968e-05, 0.00127816]
 dic["2l - muon and electoron Pdf_Up"]=[8.51097, 1.70219e-05, 0.0012953]
 dic["2l - muon and electoron Pdf_Down"]=[8.28578, 1.65716e-05, 0.00126103]
+dic["2l - 2 muon and electoron muR_05_muF_05"]=[10.6116, 2.12232e-05, 0.00161499]
+dic["2l - 2 muon and electoron muR_05_muF_10"]=[10.0428, 2.00857e-05, 0.00152844]
+dic["2l - 2 muon and electoron muR_10_muF_05"]=[8.87486, 1.77497e-05, 0.00135068]
+dic["2l - 2 muon and electoron muR_10_muF_20"]=[7.94669, 1.58934e-05, 0.00120942]
+dic["2l - 2 muon and electoron muR_20_muF_10"]=[7.13189, 1.42638e-05, 0.00108542]
+dic["2l - 2 muon and electoron muR_20_muF_20"]=[6.74785, 1.34957e-05, 0.00102697]
 dic["3l events - "]=[5511, 0.011022, 0.838729]
 dic["3l events, correct summary charge"]=[5507, 0.011014, 0.83812]
 dic["3l events, number_jets >= 2"]=[3287, 0.006574, 0.500254]
@@ -764,10 +916,22 @@ dic["3l - selected SFOS=0"]=[10, 2e-05, 0.00152192]
 dic["3l - selected SFOS=0 (weighted)"]=[0.13143, 2.6286e-07, 2.00026e-05]
 dic["3l - selected SFOS=0 Pdf_Up"]=[0.133192, 2.66384e-07, 2.02708e-05]
 dic["3l - selected SFOS=0 Pdf_Down"]=[0.129668, 2.59336e-07, 1.97344e-05]
+dic["3l - selected SFOS=0 muR_05_muF_05"]=[0.165466, 3.30932e-07, 2.51826e-05]
+dic["3l - selected SFOS=0 muR_05_muF_10"]=[0.157558, 3.15115e-07, 2.3979e-05]
+dic["3l - selected SFOS=0 muR_10_muF_05"]=[0.138033, 2.76067e-07, 2.10075e-05]
+dic["3l - selected SFOS=0 muR_10_muF_20"]=[0.12501, 2.5002e-07, 1.90255e-05]
+dic["3l - selected SFOS=0 muR_20_muF_10"]=[0.111376, 2.22752e-07, 1.69505e-05]
+dic["3l - selected SFOS=0 muR_20_muF_20"]=[0.105932, 2.11865e-07, 1.6122e-05]
 dic["3l - selected SFOS=1,2"]=[22, 4.4e-05, 0.00334822]
 dic["3l - selected SFOS=1,2 (weighted)"]=[0.289146, 5.78292e-07, 4.40056e-05]
 dic["3l - selected SFOS=1,2 Pdf_Up"]=[0.293174, 5.86347e-07, 4.46186e-05]
 dic["3l - selected SFOS=1,2 Pdf_Down"]=[0.285118, 5.70237e-07, 4.33927e-05]
+dic["3l - selected SFOS=1,2 muR_05_muF_05"]=[0.362335, 7.24669e-07, 5.51443e-05]
+dic["3l - selected SFOS=1,2 muR_05_muF_10"]=[0.347236, 6.94472e-07, 5.28465e-05]
+dic["3l - selected SFOS=1,2 muR_10_muF_05"]=[0.30175, 6.035e-07, 4.59239e-05]
+dic["3l - selected SFOS=1,2 muR_10_muF_20"]=[0.276565, 5.53131e-07, 4.2091e-05]
+dic["3l - selected SFOS=1,2 muR_20_muF_10"]=[0.244678, 4.89355e-07, 3.72379e-05]
+dic["3l - selected SFOS=1,2 muR_20_muF_20"]=[0.234014, 4.68029e-07, 3.5615e-05]
 dic["4l events"]=[439, 0.000878, 0.0668122]
 dic["4l, Correct summary charge"]=[437, 0.000874, 0.0665078]
 dic["4l, jets >= 2 and highest pt > 22"]=[436, 0.000872, 0.0663556]
@@ -780,18 +944,42 @@ dic["4l - sfos == 0, M_4l < 180 GeV"]=[14, 2.8e-05, 0.00213068]
 dic["4l - sfos == 0, M_4l < 180 GeV (weighted)"]=[0.184002, 3.68004e-07, 2.80036e-05]
 dic["4l - sfos == 0, M_4l < 180 GeV Pdf_Up"]=[0.186216, 3.72431e-07, 2.83405e-05]
 dic["4l - sfos == 0, M_4l < 180 GeV Pdf_Down"]=[0.181788, 3.63577e-07, 2.76667e-05]
+dic["4l - sfos == 0, M_4l < 180 muR_05_muF_05"]=[0.230502, 4.61005e-07, 3.50806e-05]
+dic["4l - sfos == 0, M_4l < 180 muR_05_muF_10"]=[0.221127, 4.42254e-07, 3.36537e-05]
+dic["4l - sfos == 0, M_4l < 180 muR_10_muF_05"]=[0.191815, 3.8363e-07, 2.91926e-05]
+dic["4l - sfos == 0, M_4l < 180 muR_10_muF_20"]=[0.176151, 3.52301e-07, 2.68087e-05]
+dic["4l - sfos == 0, M_4l < 180 muR_20_muF_10"]=[0.155608, 3.11217e-07, 2.36823e-05]
+dic["4l - sfos == 0, M_4l < 180 muR_20_muF_20"]=[0.148962, 2.97924e-07, 2.26708e-05]
 dic["4l - sfos == 0, M_4l > 180 GeV"]=[23, 4.6e-05, 0.00350041]
 dic["4l - sfos == 0, M_4l > 180 GeV (weighted)"]=[0.302289, 6.04578e-07, 4.60059e-05]
 dic["4l - sfos == 0, M_4l > 180 GeV Pdf_Up"]=[0.30626, 6.1252e-07, 4.66103e-05]
 dic["4l - sfos == 0, M_4l > 180 GeV Pdf_Down"]=[0.298318, 5.96636e-07, 4.54015e-05]
+dic["4l - sfos == 0, M_4l > 180 muR_05_muF_05"]=[0.381784, 7.63568e-07, 5.81044e-05]
+dic["4l - sfos == 0, M_4l > 180 muR_05_muF_10"]=[0.361491, 7.22982e-07, 5.50159e-05]
+dic["4l - sfos == 0, M_4l > 180 muR_10_muF_05"]=[0.31929, 6.38581e-07, 4.85934e-05]
+dic["4l - sfos == 0, M_4l > 180 muR_10_muF_20"]=[0.286151, 5.72302e-07, 4.35498e-05]
+dic["4l - sfos == 0, M_4l > 180 muR_20_muF_10"]=[0.256697, 5.13394e-07, 3.90672e-05]
+dic["4l - sfos == 0, M_4l > 180 muR_20_muF_20"]=[0.242976, 4.85952e-07, 3.69789e-05]
 dic["4l - sfos == 1, M_4l < 180 GeV"]=[0, 0, 0]
 dic["4l - sfos == 1, M_4l > 180 GeV"]=[0, 0, 0]
 dic["4l - sfos == 2, M_4l < 180 GeV"]=[68, 0.000136, 0.010349]
 dic["4l - sfos == 2, M_4l < 180 GeV (weighted)"]=[0.893724, 1.78745e-06, 0.000136017]
 dic["4l - sfos == 2, M_4l < 180 GeV Pdf_Up"]=[0.904998, 1.81e-06, 0.000137733]
 dic["4l - sfos == 2, M_4l < 180 GeV Pdf_Down"]=[0.88245, 1.7649e-06, 0.000134302]
+dic["4l - sfos == 2, M_4l < 180 muR_05_muF_05"]=[1.11619, 2.23238e-06, 0.000169875]
+dic["4l - sfos == 2, M_4l < 180 muR_05_muF_10"]=[1.07517, 2.15034e-06, 0.000163632]
+dic["4l - sfos == 2, M_4l < 180 muR_10_muF_05"]=[0.927873, 1.85575e-06, 0.000141215]
+dic["4l - sfos == 2, M_4l < 180 muR_10_muF_20"]=[0.85859, 1.71718e-06, 0.00013067]
+dic["4l - sfos == 2, M_4l < 180 muR_20_muF_10"]=[0.755157, 1.51031e-06, 0.000114929]
+dic["4l - sfos == 2, M_4l < 180 muR_20_muF_20"]=[0.725442, 1.45088e-06, 0.000110406]
 dic["4l - sfos == 2, M_4l > 180 GeV"]=[130, 0.00026, 0.0197849]
 dic["4l - sfos == 2, M_4l > 180 GeV (weighted)"]=[1.70859, 3.41718e-06, 0.000260033]
 dic["4l - sfos == 2, M_4l > 180 GeV Pdf_Up"]=[1.73065, 3.4613e-06, 0.00026339]
 dic["4l - sfos == 2, M_4l > 180 GeV Pdf_Down"]=[1.68653, 3.37306e-06, 0.000256676]
+dic["4l - sfos == 2, M_4l > 180 muR_05_muF_05"]=[2.15703, 4.31406e-06, 0.000328282]
+dic["4l - sfos == 2, M_4l > 180 muR_05_muF_10"]=[2.04318, 4.08636e-06, 0.000310955]
+dic["4l - sfos == 2, M_4l > 180 muR_10_muF_05"]=[1.80402, 3.60805e-06, 0.000274558]
+dic["4l - sfos == 2, M_4l > 180 muR_10_muF_20"]=[1.61798, 3.23596e-06, 0.000246243]
+dic["4l - sfos == 2, M_4l > 180 muR_20_muF_10"]=[1.45093, 2.90185e-06, 0.000220819]
+dic["4l - sfos == 2, M_4l > 180 muR_20_muF_20"]=[1.37386, 2.74771e-06, 0.00020909]
 */
